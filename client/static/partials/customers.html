@@ -1,11 +1,11 @@
-<div ng-controller='customerController'>
+<div ng-controller='CustomerController'>
   <h3><u>Add a new customer</u></h3>
   <label for="name">Customer Name: </label>
   <input type="text" id="name" ng-model='newCustomer.name'></input>
   <button type="submit" class="btn btn-primary" ng-click='addCustomer()'>Add</button>
   <p ng-if='errors'>{{errors}}</p>
   <hr>
-  <input type="text" placeholder="search name..." ng-model='filename'></input>
+  <input type="text" placeholder="search name..." ng-model='searchName'></input>
   <table class="table table-striped">
     <thead>
       <tr>
@@ -14,11 +14,11 @@
         <th>Actions</th>
       </tr>
     </thead>
-    <tbody ng-repeat='c in customers |filer : filename'>
+    <tbody ng-repeat='c in customers | filter: searchName'>
       <tr>
         <td>{{c.name}}</td>
         <td>{{c.created}}</td>
-        <td><button class="btn btn-danger" ng-click='removeCustomer($index)'>Remove</button></td>
+        <td><button class="btn btn-danger" ng-click='removeCustomer(c._id)'>Remove</button></td>
       </tr>
     </tbody>
   </table>

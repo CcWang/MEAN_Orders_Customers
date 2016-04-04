@@ -1,4 +1,4 @@
-var myApp = angular.module('myApp',['ngRoute']);
+var myApp = angular.module('myApp',["ngRoute"]);
 myApp.config(function ($routeProvider){
   $routeProvider
     .when('/customers', {
@@ -14,11 +14,28 @@ myApp.config(function ($routeProvider){
       redirectTo:'/home'
     });
 });
-myApp.factory('customerFactory',function($http){
+myApp.factory('CustomerFactory',function ($window, $http) {
   var factory = {};
-  
-  return
+  var customers = [];
+  factory.index = function(cb){
+    $http.get('/customers').success(function(data){
+      customers = data;
+      cb(customers);
+    })
+  };
+  factory.removeCustomer = function(_id){
+    $http.delete('/customers/'+_id).success(function(){
+      $window.location.reload();
+    })
+  }
+  // console.log(customers)
+  return factory;
 })
-myApp.controller('customerController',function($scope,customerFactory){
-  
+myApp.controller('CustomerController',function($scope,CustomerFactory){
+  CustomerFactory.index(function(data){
+    $scope.customers = data;
+  })
+  $scope.removeCustomer = function(_id){
+    CustomerFactory.removeCustomer(_id);
+  }
 })
