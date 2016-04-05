@@ -27,6 +27,19 @@ myApp.factory('CustomerFactory',function ($window, $http) {
     $http.delete('/customers/'+_id).success(function(){
       $window.location.reload();
     })
+  };
+
+  factory.check =function (name,cb){
+    // console.log(name);
+    $http.post('/customer',name).success(function(output){
+      if (output) {
+        cb('Please pick another name');
+      }else{
+        $http.post('/new_customer',name).success(function(data){
+          customers.push(data);
+        })
+      }
+    })
   }
   // console.log(customers)
   return factory;
@@ -38,4 +51,13 @@ myApp.controller('CustomerController',function($scope,CustomerFactory){
   $scope.removeCustomer = function(_id){
     CustomerFactory.removeCustomer(_id);
   }
+  $scope.addCustomer = function(){
+    // console.log($scope.newCustomer);
+    CustomerFactory.check($scope.newCustomer, function(message){
+      $scope.errors = message;     
+    });
+    $scope.newCustomer = {};
+  }
+
+
 })

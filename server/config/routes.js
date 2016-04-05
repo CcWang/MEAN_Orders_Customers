@@ -6,5 +6,11 @@ module.exports = function (app) {
   });
   app.delete('/customers/:id',function(req,res){
     customer_orders.customerDelete(req,res);
+  });
+  app.post('/customer', function(req,res){
+    customer_orders.findByName(req,res);
+  });
+  app.post('/new_customer',function(req,res){
+    customer_orders.create(req,res);
   })
 }
