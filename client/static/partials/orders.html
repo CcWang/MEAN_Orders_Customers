@@ -1,1 +1,26 @@
-<h1>This is orders page</h1>
+<div ng-controller = 'OrderController'>
+  <h3><u>Add a new order</u></h3>
+  <p>Customer: <select ng-options = 'c.name for c in customers' ng-model='orderCustomer' ng-change='getCustomer(orderCustomer._id)'>
+  </select></p>
+  <p>Order: <select ng-options = 'n for n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]' ng-model='orderQty' ng-change='getQty(orderQty)'></select> <select ng-options = 'p for p in products' ng-model='orderProduct' ng-change='getProduct(orderProduct)'></select></p>
+  <button type="submit" class="btn btn-primary" ng-click='addOrder()'>Order</button>
+  <hr>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Customer Name</th>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Created Date</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat='c in customers' ng-if='c.orders.length !=0'>
+      <tr>
+        <td>{{c.name}}</td>
+        <td><li ng-repeat='o in c.orders'>{{o.product}}</li></td>
+        <td><li ng-repeat='o in c.orders'>{{o.quantity}}</li></td>
+        <td><li ng-repeat='o in c.orders'>{{o.created}}</li></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

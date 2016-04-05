@@ -12,5 +12,11 @@ module.exports = function (app) {
   });
   app.post('/new_customer',function(req,res){
     customer_orders.create(req,res);
+  });
+  app.get('/orders', function(req,res){
+    customer_orders.orderIndex(req,res);
+  });
+  app.post('/new_order', function(req,res){
+    customer_orders.new_order(req,res);
   })
 }
